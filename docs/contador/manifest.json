@@ -1,0 +1,8 @@
+{
+  "name": "Contador",
+  "short_name": "Contador",
+  "id": "com.robertflo.contador",
+  "start_url": "/",
+  "display": "standalone",
+  "lang": "en"
+}

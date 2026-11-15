@@ -1,0 +1,11 @@
+import * as app from './app';
+import type { TypeScriptAnswer } from './app.contract.d.ts';
+export const appId: string = (app as unknown as { appId?: string }).appId ?? "com.robertflo.contador";
+export const grants: string = app.grants;
+export const answer: TypeScriptAnswer = app.answer;
+import type { Overlay } from './app.contract.d.ts';
+type Optional<K extends string> = K extends keyof typeof app ? (typeof app)[K] : undefined;
+export const overlay: Overlay | undefined = (app as { overlay?: unknown }).overlay as Optional<'overlay'>;
+export const tools = (app as { tools?: unknown }).tools as Optional<'tools'>;
+export const draw: ((surface: string, args: any, ctx: any, frame: any) => unknown) | undefined = (app as { draw?: unknown }).draw as Optional<'draw'>;
+export const surfaces = (app as { surfaces?: unknown }).surfaces as Optional<'surfaces'>;

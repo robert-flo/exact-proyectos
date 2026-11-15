@@ -1,0 +1,2 @@
+export default[["nav","count"],[],["greeting"]];export const types=[[{"tab":"s","tabs":["[",{"name":"s","stack":["[",{"id":"n","name":"s","url":"s","tab":"s","params":{},"fragment":"s"}]}],"next":"n"},"n"],[],[{"text":"s"}]];
+export const sourceTypes={"greeting":[["s"],{"text":"s"}]};export const pages=[["client","inferred",0],["client","inferred",1]];export const viewportMedia=[];export const activation={waits:["press","change","input","navigate","intersect"],kept:false,viewport:false,tools:false};export const markdownPaths=[];export const choosesScheme=false;
