@@ -1,28 +1,78 @@
-// Contador: la vista. app.ts responde lo que se pide. Colores, tipografías
-// y tamaños quedan sin decir: cada plataforma aporta los suyos.
+// =====================================================================
+// Contador: la vista, escrita en el DSL de exact (llamado Contract).
+// Este archivo dice QUÉ hay en la app, no CÓMO se dibuja: colores,
+// tipografías y tamaños quedan sin decir y cada plataforma aporta los suyos.
+// app.ts responde lo que aquí se pide (los recursos).
+//
+// @ref LLP 0001#codigo-comentado — Código como material de estudio
+// =====================================================================
+
+// Un shape declara un TIPO DE DATO que llega desde la capa de datos.
+// Greeting significa: un objeto con un campo `text` de tipo string.
+// Los tipos viven aquí, en el contrato, y TypeScript los recibe generados.
 shape Greeting
   text: string
 
+// La navegación: un mapa de rutas con nombre (nav).
+// `home "/"` declara una pantalla inicial en la path "/".
+// Después consultas este mapa con top(nav) (la pantalla activa)
+// o stack(nav) (todas las apiladas).
 routes nav
   home "/"
 
+// Un componente es una vista reusable. Contador es la pantalla completa.
 component Contador
+  // resource = un pedido a la capa de datos (app.ts).
+  // Llama a la función `greeting` de app.ts con el argumento "Contador"
+  // y espera de vuelta un dato con forma Greeting.
+  // Regla de separación: la vista declara QUÉ necesita; app.ts decide CÓMO.
   resource greeting = greeting("Contador") as shape Greeting
+
+  // state = memoria local del componente, que solo él ve.
+  // Nada más puede escribir count: toda escritura pasa por una action.
   state count = 0
+
+  // action = la única puerta por la que cambia un state.
+  // count tiene exactamente dos puertas: inc (+1) y dec (-1).
   action inc
     count = count + 1
   action dec
     count = count - 1
+
   view
+    // main es la raíz de la vista.
+    // testId marca nodos para las pruebas: tap "inc" busca testId "inc".
+    // navigationKey ata esta pantalla a la pila de navegación;
+    // top(nav).id es el id de la pantalla activa.
     main testId="root" navigationKey=`${top(nav).id}` width="100%" height="100%"
+      // Este bucle pinta la PILA de navegación: una columna por pantalla
+      // apilada. Hoy la pila tiene una sola (home), pero es el andamio
+      // que regala `exact new` para que varias pantallas convivan después.
       for e in stack(nav) key=e.id
         column navigationKey=`${e.id}` navigationScroll="content" position="absolute" inset=0 display="flex" flex-direction="column"
+          // header: en web se convierte en una barra superior;
+          // en iOS, en la navigation bar del sistema.
+          // role="heading" + aria-level lo anuncian como título a lectores
+          // de pantalla. flex=1: ocupa el ancho que queda libre.
           header display="flex" align-items="center"
             text "Contador" role="heading" aria-level=1 flex=1
+          // scroll = el área de contenido bajo el header.
+          // flex=1 toma el alto restante; min-height=0 le permite encogerse
+          // si hiciera falta (regla clásica de flexbox).
           scroll id="content" flex=1 min-height=0
+            // column centrada en los dos ejes (align-items y
+            // justify-content en center); gap=16 separa a sus hijos.
+            // Los nombres de propiedades son de CSS: lo que ya sabes
+            // de la web aplica tal cual.
             column display="flex" flex-direction="column" align-items="center" justify-content="center" gap=16 height="100%"
+              // El número en pantalla. `${count}` interpola el estado:
+              // cuando count cambia, exact repinta este texto.
               text `${count}` testId="count"
+              // row con gap=16: los dos botones, lado a lado.
               row display="flex" gap=16
+                // press=inc conecta el botón con la action inc.
+                // "symbol:add" es un ícono de plataforma (SF Symbols en
+                // Apple); exact lo traduce a su equivalente en cada una.
                 button press=inc aria-label="Sumar uno" testId="inc"
                   image "symbol:add"
                 button press=dec aria-label="Restar uno" testId="dec"
