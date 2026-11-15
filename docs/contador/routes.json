@@ -2,7 +2,7 @@
   "routes": [
     {
       "name": "home",
-      "pattern": "/",
+      "pattern": "/exact-proyectos/contador/",
       "render": "client",
       "notfound": false
     },
