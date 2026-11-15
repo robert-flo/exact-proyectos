@@ -1,0 +1,20 @@
+{
+  "$schema": "../exact/scripts/app.schema.json",
+  "name": "Contador",
+  "short_name": "Contador",
+  "id": "com.robertflo.contador",
+  "start_url": "/",
+  "display": "standalone",
+  "app": {
+    "id": "com.robertflo.contador",
+    "name": "Contador"
+  },
+  "host": {
+    "web": {}
+  },
+  "deploy": {
+    "store": {
+      "web": "0"
+    }
+  }
+}

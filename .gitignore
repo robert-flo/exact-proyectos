@@ -1,0 +1,5 @@
+# Builds y estado local de cada proyecto exact
+*/target/
+*/.exact/
+*/node_modules/
+*.log

@@ -1,0 +1,13 @@
+test "el contador arranca en cero"
+  expect tree has "root"
+  expect text "count" == "0"
+
+test "sumar suma uno"
+  tap "inc"
+  expect text "count" == "1"
+
+test "restar resta uno"
+  tap "inc"
+  tap "inc"
+  tap "dec"
+  expect text "count" == "1"
